@@ -2,48 +2,63 @@
 <html lang="pt-br">
 	<head>
 		<meta charset="UTF-8">
-
-		<title>Gerencidor de Estoque</title>
-		
+		<title>Gerencidor de Estoque</title>		
 		<!-- JQuery -->
 		<script src="js/jquery-2.2.1.js"></script>
-
 		<!-- bootstrap - link cdn -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	
 		<!-- incluindo css -->
 		<link href="css/styles.css" rel="stylesheet">
-
 	</head>
-
 	<body class="body-index">
-
 		<nav class="navbar navbar-default navbar-static-top">
 			<div class="container">
-				<form class="form-inline form-entrar">
+				<form class="form-inline form-entrar" method="post">
 					<div class="form-group">				
 						<input type="text" name="usuario" id="usuario" placeholder="Usuário" class="form-control" autocomplete="off" />
-						<input type="password" name="senha" id="senha" placeholder="Senha" class="form-control" />
-						<button type="button" class="btn btn-success">Entrar</button>
-						<button type="button" class="btn btn-info">Cadastro</button>
+
+						<input type="password" name="senha" id="senha" placeholder="Senha" class="form-control"autocomplete="off" />
+
+						<button type="button" class="btn btn-success" id="btn-entrar">Entrar</button>
+						<button type="button" class="btn btn-info" id="btn-cadastrar">Cadastro</button>
 					</div>
 				</form>
 			</div>
-			
-		</nav>
+		</nav>		
+        <script>
+            $(document).ready(function() {
+                $('#btn-entrar').click(function(event) {
+                    event.preventDefault();
+                    console.log('botão entrar clicado...');
+                    
+                    var user = $('#usuario').val();
+                    var pass = $('#senha').val();
 
-	    <div class="container">
-	    	<div class="row">
-	    		<div class="col-md-2"></div>
+                    !user && alert('O campo usuário é requerido.');
+                    !pass && alert('O campo senha é requerido.');
 
-	    		<div class="col-md-8">
-					<img src="images/game_of_thrones_logo.jpg" />
-				</div>
+                    if(!user && !pass) {
+                        alert('O usuário e senha são obrigatórios.');
+                    };
+                    
+                    console.log(user);
 
-	    		<div class="col-md-2"></div>
-		    	</div>
-	    	</div>
-	    </div>	
-		
+                    $.ajax({
+                        url: 'http://localhost:8080/home',
+                        type: 'POST',
+                        data: {
+                            user: user,
+                            pass: pass
+                        },
+                        success: function(res) {
+                            console.log('success: ', res)
+                        },
+                        error: function(error) {
+                            console.log('error: ', error)
+                        }
+                    });
+                });
+            });
+        </script>
 	</body>
 </html>
