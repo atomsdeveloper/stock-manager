@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', () => console.log('Hello, word!'))
+const controller = require('../controller/controller.js');
+
+router.get('/', controller.start);
 
 module.exports = router;
