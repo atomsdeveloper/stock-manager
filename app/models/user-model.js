@@ -3,16 +3,11 @@
 
 const hasUser = async (user, pass) => {
     try {
-        // const user = await prisma.users.findOne({
-        //     data: {
-        //         name: nome,
-        //         pass: senha,
-        //         user: usuario,
-        //         house: casa
-        //     }
-        // });
-        console.log(user, pass);
-        return {user, pass};
+        if(user && pass) {
+            return {user, pass};
+        } else {
+            return false
+        }
     } catch (error) {
         throw error;
     };
