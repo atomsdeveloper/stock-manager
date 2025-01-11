@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu+Sans+Mono:ital,wght@0,400..700;1,400..700&display=swap");
+
+* {
+	margin: 0 !important;
+	padding: 0;
+	box-sizing: border-box !important;
+}
+
+:root {
+    --heigth-nav: 6.5rem
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font-family: "Ubuntu Sans Mono", serif;
+	font-optical-sizing: auto;
+	font-weight: 500;
+	font-style: normal;
+}
+
+
+
