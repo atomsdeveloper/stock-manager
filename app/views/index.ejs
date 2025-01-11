@@ -38,24 +38,29 @@
                     !pass && alert('O campo senha é requerido.');
 
                     function request() {
-                        $.ajax({
-                            url: 'http://localhost:8080/login',
-                            contentType: 'application/json',
+                        fetch( 'http://localhost:8080/login', {
+                            headers: {
+                                contentType: 'application/json',
+                            },
                             type: 'POST',
                             data: JSON.stringify({user, pass}),
-                            success: function(res) {
-                                window.location.href = "http://localhost:8080/home" 
-                            },
-                            error: function(error) {
-                                console.log('error: ', error)
-                            }
-                        });
+                        })
+                        .then(resp => {
+                            if(!resp.ok) {
+                                throw new Error('network response was not');
+                            };
+                            return resp.json();
+                        }).then(data => {
+                            Window.location.href = "http://localhost:8080/home"
+                        }).catch(error => 
+                            console.log(error)
+                        );
                     }
 
                     if(!user && !pass) {
                         alert('O usuário e senha são obrigatórios.');
                     } else {
-                        request()
+                        request();
                     };
                 });
             });
