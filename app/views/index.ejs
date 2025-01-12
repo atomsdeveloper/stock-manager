@@ -27,6 +27,7 @@
             <form class="form-inline form-entrar" method="post">
                 <div class="form-group">				
                     <input type="text" name="usuario" id="usuario" placeholder="Usuário" class="form-control" autocomplete="off" />
+                    <input type="email" name="email" id="email" placeholder="E-mail" class="form-control"autocomplete="off" />
                     <input type="password" name="senha" id="senha" placeholder="Senha" class="form-control"autocomplete="off" />
 
                     <button type="button" class="btn btn-success" id="btn-entrar">Entrar</button>
@@ -40,12 +41,20 @@
                     console.log('botão entrar clicado...');
                     
                     var user = $('#usuario').val();
+                    var email = $('#email').val();
                     var pass = $('#senha').val();
 
                     !user && Swal.fire({
                                 icon: 'error',
                                 title: 'Ops...',
                                 text: 'User is required',
+                                footer: '<a href="#">Why do I have this issue?</a>'
+                            });
+                    
+                    !email && Swal.fire({
+                        icon: 'error',
+                                title: 'Ops...',
+                                text: 'Email is required',
                                 footer: '<a href="#">Why do I have this issue?</a>'
                             });
 
@@ -62,7 +71,7 @@
                                 contentType: 'application/json',
                             },
                             type: 'POST',
-                            body: JSON.stringify({user, pass}),
+                            body: JSON.stringify({user, email, pass}),
                         })
                         .then(resp => {
                             if(!resp.ok) {
