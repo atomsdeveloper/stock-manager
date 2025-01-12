@@ -10,6 +10,6 @@ router.get('/home', controller.home)
 
 // routes
 router.post('/login', controller.login);
-router.post('/register', middleware.hasKey, controller.register);
+router.post('/register', middleware.hasKey, controller.registerUserManager); // register user stock manager
 
 module.exports = router;
