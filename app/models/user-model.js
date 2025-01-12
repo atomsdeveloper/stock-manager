@@ -13,6 +13,19 @@ const hasUser = async (user, pass) => {
     };
 };
 
+const insertUser = async (name, email, pass) => {
+    try {
+        if(name && email && pass) {
+            return {name, email, pass};
+        } else {
+            return false
+        }
+    } catch (error) {
+        throw error;
+    };
+};
+
 module.exports = {
     hasUser,
+    insertUser
 };
