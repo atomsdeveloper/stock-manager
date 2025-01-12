@@ -12,11 +12,10 @@ datasource db {
 }
 
 model UserManager {
-  id         String    @id @default(cuid())
+  id         String   @id @default(cuid())
   name       String?
-  email      String?   @unique
+  email      String?  @unique
   password   String?
-  sessions   Session[]
   created_at DateTime
 }
 
@@ -36,13 +35,11 @@ model User {
 }
 
 model Session {
-  id            String       @id @default(cuid())
-  sessionToken  String       @unique
-  user_id       String
-  user          User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  expires       DateTime
-  UserManager   UserManager? @relation(fields: [userManagerId], references: [id])
-  userManagerId String?
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  user_id      String
+  user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  expires      DateTime
 }
 
 model Order {
