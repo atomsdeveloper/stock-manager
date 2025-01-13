@@ -14,12 +14,7 @@
 		<link href="css/index.css" rel="stylesheet">
 	</head>
 	<body class="body-index">
-		<nav class="navbar navbar-static-top">
-            <div class="caixa-nav">
-                <img src="/images/logo-lm.png" alt="Logo do Sistema" class="logo">
-                <a href="https://google.com" target="_blank" rel="noopener noreferrer" class="link-site"> Ir para o site</a>
-            </div>
-		</nav>
+        <%- include('navbar') %>
         <div class="container">
             <div class="caixa-banner">
                 <h1>Teste</h1>
@@ -40,9 +35,9 @@
                     event.preventDefault();
                     console.log('botão entrar clicado...');
                     
-                    var user = $('#usuario').val();
+                    var name = $('#usuario').val();
                     var email = $('#email').val();
-                    var pass = $('#senha').val();
+                    var password = $('#senha').val();
 
                     !user && Swal.fire({
                                 icon: 'error',
@@ -52,7 +47,7 @@
                             });
                     
                     !email && Swal.fire({
-                        icon: 'error',
+                                icon: 'error',
                                 title: 'Ops...',
                                 text: 'Email is required',
                                 footer: '<a href="#">Why do I have this issue?</a>'
@@ -67,11 +62,11 @@
 
                     function request() {
                         fetch( 'http://localhost:8080/login', {
+                            method: 'POST',
                             headers: {
-                                contentType: 'application/json',
+                                'content-Type': 'application/json',
                             },
-                            type: 'POST',
-                            body: JSON.stringify({user, email, pass}),
+                            body: JSON.stringify({name, email, password}),
                         })
                         .then(resp => {
                             if(!resp.ok) {
@@ -89,7 +84,7 @@
                         return Swal.fire({
                             icon: 'error',
                             title: 'Ops...',
-                            text: 'User and Pass is required',
+                            text: 'User, Email and Pass is required',
                             footer: '<a href="#">Why do I have this issue?</a>'
                         });
                     } else {

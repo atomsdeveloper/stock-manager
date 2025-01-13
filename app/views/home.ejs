@@ -8,46 +8,12 @@
 		<!-- bootstrap - link cdn -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 		<!-- incluindo css -->
-		<link href="css/styles.css" rel="stylesheet">
+		<link href="css/global.css" rel="stylesheet">
 	</head>
 	<body class="body-index">
-		<div class="" style="background-color: aqua;">
-            <h1>Página Home</h1>
-        </div>
+		<%- include('navbar') %>
+        <h1>Home</h1>
         <script>
-            // $(document).ready(function() {
-            //     $('#btn-entrar').click(function(event) {
-            //         event.preventDefault();
-            //         console.log('botão entrar clicado...');
-                    
-            //         var user = $('#usuario').val();
-            //         var pass = $('#senha').val();
-
-            //         !user && alert('O campo usuário é requerido.');
-            //         !pass && alert('O campo senha é requerido.');
-
-            //         if(!user && !pass) {
-            //             alert('O usuário e senha são obrigatórios.');
-            //         };
-                    
-            //         console.log(user);
-
-            //         $.ajax({
-            //             url: 'http://localhost:8080/home',
-            //             type: 'POST',
-            //             data: {
-            //                 user: user,
-            //                 pass: pass
-            //             },
-            //             success: function(res) {
-            //                 console.log('success: ', res)
-            //             },
-            //             error: function(error) {
-            //                 console.log('error: ', error)
-            //             }
-            //         });
-            //     });
-            // });
         </script>
 	</body>
 </html>
