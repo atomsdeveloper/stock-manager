@@ -6,47 +6,56 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const hasUser = async (user, email, pass) => {
+    // create session user manager
     try {
-        // check session user
-
-        const userExist = await prisma.user.findUnique({
+        const userExist = await prisma.userManager.findUnique({
             where: {
-                name: user,
                 email: email,
-                password: pass,
             },
         });
 
-        const match = await bycrypt.compare(pass, userExist.password);
-
-        if(userExist && match) {
-            return {userExist};
+        if(userExist) {
+            const match = bycrypt.compare(pass, userExist.password);
+            if (match) {
+                return { userExist }; // Senha correta
+            } else {
+                throw new Error('Invalid credentials'); // Senha incorreta
+            }
+        } else {
+            throw new Error('not is possible return a user.');
         };
-        throw new Error('not is possible return a user.');
     } catch (error) {
         throw error;
     };
 };
 
 const insertUserManager = async (name, email, pass) => {
-    const saltRounds = process.env.SALT_ROUNDS;
+    const saltRounds = Number(process.env.SALT_ROUNDS);
     const hashPass = await bycrypt.hash(pass, saltRounds);
 
     try {
-        const user = await prisma.userManager.create({
+        const fetchEmail = await prisma.userManager.findUnique({
+            where: {
+                email: email
+            }
+        });
+
+        if(fetchEmail) { 
+           return null         
+        }            
+
+        const newUser = await prisma.userManager.create({
             data: {
                 name: name,
                 email: email,
                 password: hashPass,
                 created_at: new Date()
             },
-        })
+        });
 
-        if(user) {
-            return user;
-        };
+        return newUser
     } catch (error) {
-        throw res.status(500).json({message: "internal database error."});
+        throw new Error('internal database error.');
     };
 };
 
