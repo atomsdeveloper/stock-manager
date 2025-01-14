@@ -9,7 +9,7 @@ router.get('/', controller.enter);
 router.get('/home', controller.home)
 
 // routes
-router.post('/login', controller.login);
-router.post('/register', middleware.hasKey, controller.registerUserManager); // register user stock manager
+router.post('/login', middleware.checkFields, controller.login);
+router.post('/register',  middleware.checkFields, middleware.hasKey, controller.registerUserManager, ); // register user stock manager
 
 module.exports = router;
