@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const hasUser = async (email, pass) => {
+const hasUser = async (_, email, pass) => {
     // create session user manager
     try {
         const userExist = await prisma.userManager.findUnique({
@@ -16,11 +16,13 @@ const hasUser = async (email, pass) => {
 
         if(userExist) {
             const match = bcrypt.compare(pass, userExist.password);
+        
             if (match) {
-                return { userExist }; // Senha correta
+                return {userExist}; // Senha correta
             } else {
                 throw new Error('Invalid credentials'); // Senha incorreta
             }
+            
         } else {
             throw new Error('not is possible return a user.');
         };
