@@ -1,11 +1,11 @@
 // Hash
-const bycrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 // Prisma
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const hasUser = async (user, email, pass) => {
+const hasUser = async (email, pass) => {
     // create session user manager
     try {
         const userExist = await prisma.userManager.findUnique({
@@ -15,7 +15,7 @@ const hasUser = async (user, email, pass) => {
         });
 
         if(userExist) {
-            const match = bycrypt.compare(pass, userExist.password);
+            const match = bcrypt.compare(pass, userExist.password);
             if (match) {
                 return { userExist }; // Senha correta
             } else {
@@ -31,7 +31,7 @@ const hasUser = async (user, email, pass) => {
 
 const insertUserManager = async (name, email, pass) => {
     const saltRounds = Number(process.env.SALT_ROUNDS);
-    const hashPass = await bycrypt.hash(pass, saltRounds);
+    const hashPass = await bcrypt.hash(pass, saltRounds);
 
     try {
         const fetchEmail = await prisma.userManager.findUnique({
