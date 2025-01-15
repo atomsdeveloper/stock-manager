@@ -39,7 +39,7 @@
                     var email = $('#email').val();
                     var password = $('#senha').val();
 
-                    !user && Swal.fire({
+                    !name && Swal.fire({
                                 icon: 'error',
                                 title: 'Ops...',
                                 text: 'User is required',
@@ -53,7 +53,7 @@
                                 footer: '<a href="#">Why do I have this issue?</a>'
                             });
 
-                    !pass && Swal.fire({
+                    !password && Swal.fire({
                         icon: 'error',
                                 title: 'Ops...',
                                 text: 'Pass is required',
@@ -75,12 +75,10 @@
                             return resp.json();
                         }).then(data => {
                             window.location.href = "http://localhost:8080/home"
-                        }).catch(error => 
-                            console.log(error)
-                        );
+                        })
                     }
 
-                    if(!user && !pass) {
+                    if(!name && !password) {
                         return Swal.fire({
                             icon: 'error',
                             title: 'Ops...',
