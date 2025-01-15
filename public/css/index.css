@@ -3,40 +3,6 @@
 	background: #efefef;
 }
 
-nav {
-    padding: 0;
-    background-color: #fff;
-    height: var(--heigth-nav);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.caixa-nav {
-    width: 95%;
-    height: 90%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.caixa-nav .logo {
-    width: 5rem;
-    height: 5rem;
-    width: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-}
-
-.caixa-nav .link-site {
-    width: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .container {
     width: 100%;
     height: calc(100vh - var(--heigth-nav) );
