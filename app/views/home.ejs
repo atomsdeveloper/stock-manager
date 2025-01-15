@@ -2,18 +2,23 @@
 <html lang="pt-br">
 	<head>
 		<meta charset="UTF-8">
-		<title>Home | Gerencidor de Estoque</title>		
+		<title>HOME | Gerencidor de Estoque</title>		
 		<!-- JQuery -->
 		<script src="js/jquery-2.2.1.js"></script>
+        <!-- sweetalert - link cdn -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<!-- bootstrap - link cdn -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-		<!-- incluindo css -->
-		<link href="css/global.css" rel="stylesheet">
+		<!-- css -->
+        <link href="css/global.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/navbar.css">
 	</head>
 	<body class="body-index">
-		<%- include('navbar') %>
-        <h1>Home</h1>
-        <script>
-        </script>
+        <%- include('navbar') %>
+        <div class="container">
+            <div class="caixa-banner">
+                <h1>Teste</h1>
+            </div>
+        </div>		
 	</body>
 </html>
