@@ -10,9 +10,9 @@ const hasKey = async (req, res, next) => {
 };
 
 const checkFields = async (req, res, next) => {
-    const {user, email, pass} = req.body
+    const {name, email, password} = req.body
 
-    if(!user || !email || !pass) {
+    if(!name || !email || !password) {
         return res.status(422).json({message: 'not content'});
     }
     next();

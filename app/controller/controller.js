@@ -8,13 +8,13 @@ const home = (req, res) => res.status(200).render('home');
 //routes
 const login = async (req, res) => {
     try {
-        const {user, email, pass} = req.body;
-        console.log(user)
+        const {email, password} = req.body;
         
-        const hasUser = await model.hasUser(user, email, pass);
+        const hasUser = await model.hasUser(email, password);
+        console.log(hasUser);
 
         if (hasUser) {
-            return res.redirect('/home');
+            return res.status(200).json({message: "success"});
         } else {
             res.status(401).json({message: "invalid credentials."});
         }
