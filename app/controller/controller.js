@@ -2,18 +2,18 @@ const model = require('../models/user-model')
 
 
 // pages
-const enter = (req, res) => res.status(200).render('index');
-const home = (req, res) => res.status(200).render('home');
+const home = (req, res) => {
+    return res.status(200).render('home');
+}
 
 //routes
 const login = async (req, res) => {
     try {
-        const {email, password} = req.body;
-        
-        const hasUser = await model.hasUser(email, password);
-        console.log(hasUser);
+        const {name, email, password} = req.body;
+        const hasUser = await model.hasUser(name, email, password);
+        const { userExist } = hasUser;
 
-        if (hasUser) {
+        if (userExist) {
             return res.status(200).json({message: "success"});
         } else {
             res.status(401).json({message: "invalid credentials."});
@@ -41,7 +41,6 @@ const registerUserManager = async  (req, res) => {
 };
 
 module.exports = {
-    enter,
     home,
     login,
     registerUserManager
