@@ -1,13 +1,21 @@
 const express = require("express");
 const body_parser = require("body-parser");
 const path = require("path");
+const cors = require("cors");
 
 const app = express();
 
 const router = require("./app/routes/router.js");
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, './app/views'));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './frontend/build', 'index.html'));
+});
+
+app.use(cors({
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    // credentials: true // need send cookies or authentications headers 
+}));
 
 app.use(express.static(path.join(__dirname, './public')));
 app.use(body_parser.json());
