@@ -1,5 +1,11 @@
-const model = require('../models/user-model')
+// Database
+const model = require('../models/user-model');
 
+// Token
+const jwt = require('jsonwebtoken');
+
+// Enviroment Variable
+require('dotenv').config();
 
 // pages
 const home = (req, res) => {
@@ -10,11 +16,20 @@ const home = (req, res) => {
 const login = async (req, res) => {
     try {
         const {name, email, password} = req.body;
-        const hasUser = await model.hasUser(name, email, password);
-        const { userExist } = hasUser;
 
-        if (userExist) {
-            return res.status(200).json({message: "success"});
+        const hasUser = await model.hasUser(name, email, password);
+        
+        const { user } = hasUser
+
+        const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET, {
+            expiresIn: '1h', // O token expirará em 1 hora
+        });
+
+        res.setHeader('Authorization', `Bearer ${token}`)
+
+        if (user) {
+            const {name, email} = user
+            return res.status(200).json({message: "success", token: token, user: {name, email}});
         } else {
             res.status(401).json({message: "invalid credentials."});
         }
