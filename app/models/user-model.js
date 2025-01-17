@@ -8,17 +8,17 @@ const prisma = new PrismaClient();
 const hasUser = async (_, email, pass) => {
     // create session user manager
     try {
-        const userExist = await prisma.userManager.findUnique({
+        const user = await prisma.userManager.findUnique({
             where: {
                 email: email,
             },
         });
 
-        if(userExist) {
-            const match = bcrypt.compare(pass, userExist.password);
+        if(user) {
+            const match = bcrypt.compare(pass, user.password);
         
             if (match) {
-                return {userExist}; // Senha correta
+                return {user}; // Senha correta
             } else {
                 throw new Error('Invalid credentials'); // Senha incorreta
             }
