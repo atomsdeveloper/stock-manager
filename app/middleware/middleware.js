@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+const jwt = require('jsonwebtoken');
+
 const hasKey = async (req, res, next) => {
     const key = await req.headers['x-api-key'];
 
@@ -18,7 +20,29 @@ const checkFields = async (req, res, next) => {
     next();
 }
 
+const checkBearerToken = async (req, res, next) => {
+    const hasToken = req.headers['authorization'];
+    if (!hasToken) {
+        return res.status(401).json({message: 'no token provided.'});
+    }
+
+    const token = hasToken.split(' ')[1];
+    if(!token) {
+        return res.status(401).json({message: 'token missing'});
+    }
+
+    jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
+        if(error) {
+            return res.status(403).json({message: 'invalid token.'});
+        }
+
+        req.user = user
+        next();
+    })
+}
+
 module.exports = {
     hasKey,
     checkFields,
+    checkBearerToken
 }
