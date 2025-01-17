@@ -7,19 +7,22 @@ const app = express();
 
 const router = require("./app/routes/router.js");
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, './frontend/build', 'index.html'));
-});
-
 app.use(cors({
     origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    // credentials: true // need send cookies or authentications headers 
+    credentials: true // need send cookies or authentications headers 
 }));
 
 app.use(express.static(path.join(__dirname, './public')));
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({extended: true}));
+
 app.use(router);
+
+app.use(express.static(path.join(__dirname, './frontend/build')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './frontend/build', 'index.html'));
+});
 
 module.exports = app;
