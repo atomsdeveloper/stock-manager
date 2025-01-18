@@ -19,7 +19,6 @@ export const Error = () => {
 
 export const PrivateRoute = ({children}) => {
   const token = localStorage.getItem('token');
-
   if(!token) {
     return (
       <Navigate to={"/"}/>
@@ -41,7 +40,7 @@ const App = () => {
           <Route path="/home" element={
             <>
               <PrivateRoute>
-                <Home/>
+                < Home/>
               </PrivateRoute>
             </>
           } 

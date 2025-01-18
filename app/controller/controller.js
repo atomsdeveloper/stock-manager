@@ -9,14 +9,13 @@ require('dotenv').config();
 
 // pages
 const home = (req, res) => {
-    return res.status(200).render('home');
+    return res.status(200).json({message: 'Access'})
 }
 
 //routes
 const login = async (req, res) => {
     try {
         const {name, email, password} = req.body;
-
         const hasUser = await model.hasUser(name, email, password);
         
         const { user } = hasUser
