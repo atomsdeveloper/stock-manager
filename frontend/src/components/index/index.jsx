@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import Swal from 'sweetalert2';
 
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // Styles
 import '../../assets/css/app.css';
 
 const Index = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
