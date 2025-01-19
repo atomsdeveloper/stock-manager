@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
 
 // Styles
-import '../../assets/css/app.css';
+import '../../assets/css/index.css';
 
 const Index = () => {
     const navigate = useNavigate();
@@ -53,41 +53,50 @@ const Index = () => {
 }
   return (
     <div className="container">
+      <div className="container-content">
+
         <form className="form-entrar" onSubmit={request}>
           <div className="form-group">
             <input
-                type="text"
-                name="usuario"
-                placeholder="Usuário"
-                className="form-control"
-                autoComplete="off"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+              type="text"
+              name="usuario"
+              placeholder="Usuário"
+              className="form-control"
+              autoComplete="off"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <input
-                type="email"
-                name="email"
-                placeholder="E-mail"
-                className="form-control"
-                autoComplete="off"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              name="email"
+              placeholder="E-mail"
+              className="form-control"
+              autoComplete="off"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <input
-                type="password"
-                name="senha"
-                placeholder="Senha"
-                className="form-control"
-                autoComplete="off"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              name="senha"
+              placeholder="Senha"
+              className="form-control"
+              autoComplete="off"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <button type="submit" className="btn btn-success">
-               Entrar
+              Entrar
             </button>
           </div>
         </form>
-</div>
+        
+        <div className="container-image">
+          <div className="image-tag">
+            <img src="/images/image-login.jpg" alt="Imagem de Login" />
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

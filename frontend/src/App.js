@@ -6,9 +6,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate} from "react-router-do
 import Index from "./components/index";
 import Home from "./components/home";
 
-// Styles
-import './assets/css/app.css';
-
 export const Error = () => {
   return (
     <div class="container">

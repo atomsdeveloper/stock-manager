@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 // Styles
-import '../../assets/css/app.css';
+import '../../assets/css/index.css';
 
 const Home = async () => {
   const navigate = useNavigate();
@@ -27,14 +27,12 @@ const Home = async () => {
       throw new Error('Unauthorized access');
     }
 
-    const data = await response.json();
   } catch (error) {
-    console.error('Error:', error);
-    navigate('/'); // Redireciona para login em caso de erro
+    navigate('/'); 
   }
 
   return (
-    <div className="container">
+    <div className="">
        <h1>Home</h1>
     </div>
   )
