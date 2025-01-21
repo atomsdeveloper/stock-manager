@@ -7,7 +7,7 @@ const middleware = require('../middleware/middleware.js');
 
 // routes
 router.get('/home', middleware.checkBearerToken, controller.home)
-router.post('/login', middleware.checkFields,  middleware.checkBearerToken, controller.login);
+router.post('/login', middleware.checkFields, controller.login,  middleware.checkBearerToken);
 
 // router.post('/register', middleware.checkFields, middleware.hasKey, controller.registerUserManager, ); // register user stock private
 
