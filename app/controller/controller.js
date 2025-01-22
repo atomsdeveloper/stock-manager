@@ -16,7 +16,16 @@ const home = (req, res) => {
 const login = async (req, res) => {
     try {
         const {name, email, password} = req.body;
+        
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: "Name, email, and password are required." });
+        }
+        
         const hasUser = await model.hasUser(name, email, password);
+        
+        // if (!hasUser) {
+        //     return res.status(401).json({message: 'Invalid credentials. Try again later or Check your credentials.' });
+        // }
         
         const { user } = hasUser
 
@@ -26,13 +35,11 @@ const login = async (req, res) => {
 
         res.setHeader('Authorization', `Bearer ${token}`)
 
-        if (user) {
-            const {name, email} = user
-            return res.status(200).json({message: "success", token: token, user: {name, email}});
-        } else {
-            res.status(401).json({message: "invalid credentials."});
+        return res.status(200).json({message: "success", token: token, user: {name, email}});
+    } catch (error) {
+        if(error.message) {
+            return res.status(401).json({message: 'Invalid credentials. Try again later or Check your credentials.' });
         }
-    } catch {
         return res.status(500).json({message: "internal server error."});
     };
 };

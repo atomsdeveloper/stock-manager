@@ -14,20 +14,20 @@ const hasUser = async (_, email, pass) => {
             },
         });
 
-        if(user) {
-            const match = bcrypt.compare(pass, user.password);
-        
-            if (match) {
-                return {user}; // Senha correta
-            } else {
-                throw new Error('Invalid credentials'); // Senha incorreta
-            }
-            
-        } else {
+        if(!user) {
             throw new Error('not is possible return a user.');
-        };
+        }
+
+        const match = await bcrypt.compare(pass, user.password);
+        
+        if (!match) {
+            throw new Error('Invalid credentials. Try again later or Check your credentials.');
+        }
+
+        return {user};
+       
     } catch (error) {
-        throw error;
+        return error;
     };
 };
 
