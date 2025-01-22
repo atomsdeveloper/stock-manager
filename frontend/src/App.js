@@ -2,9 +2,9 @@ import React from "react";
 
 import { BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
 
-// Components
-import Index from "./components/index";
-import Home from "./components/home";
+// Templates
+import Index from "./Template/login";
+import Home from "./Template/home";
 
 export const Error = () => {
   return (

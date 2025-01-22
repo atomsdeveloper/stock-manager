@@ -1,95 +1,26 @@
-.container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
-.container > .container-content {
-    width: 95%;
-    height: 95%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
-.container > .container-content > .form-entrar {
-    width: 50%;
-    height: 100%;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.container > .container-content > .form-entrar > .form-group {
-    width: 75%;
-    height: 70%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    border-radius: 8px;
-
-    padding: 1.5rem;
-
-    border-radius: 8px;
-    border: 1px solid #e7e7e7;
-    box-shadow: 0px 0px 45px -7px rgba(189,178,189,1);
-}
-
-.container > .container-content > .form-entrar > .form-group > .form-title {   
-    width: 100%;
-    height: 40%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.container > .container-content > .form-entrar > .form-group > .form-title > h1 { 
-    width: 60%;
-    height: 100%;  
-    font-size: xx-large;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.container > .container-content > .form-entrar > .form-group > .form-title > img { 
-    width: 100px;  
-
-}
-
-.container > .container-content > .form-entrar > .form-group > .form-control {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    margin: 1rem;
-}
-
-.container > .container-content > .container-image {
-    width: 50%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.container > .container-content > .container-image > .image-tag {
-    width: 100%;
-    height: 100%;
-    display: flex;
-}
-
-
-.container > .container-content > .container-image > .image-tag > img {
-    width: 100%;
-    height: 100%;
-    rotate: 270deg;
-    object-fit: contain;
+html {
+  font-size: 62.5%;
 }
