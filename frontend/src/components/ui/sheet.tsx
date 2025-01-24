@@ -3,7 +3,7 @@ import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { cva } from "class-variance-authority";
 import { X } from "lucide-react"
 
-import { cn } from "@/src/lib/utils"
+import { cn } from "../../lib/utils"
 
 const Sheet = SheetPrimitive.Root
 
@@ -13,7 +13,15 @@ const SheetClose = SheetPrimitive.Close
 
 const SheetPortal = SheetPrimitive.Portal
 
-const SheetOverlay = React.forwardRef(({ className, ...props }, ref) => (
+interface SheetContentProps {
+  className?: string;
+  side?: "top" | "bottom" | "left" | "right";
+  children?: React.ReactNode;
+  style?: {};
+}
+
+
+const SheetOverlay = React.forwardRef<HTMLDivElement, SheetContentProps>(({ className, ...props }, ref) => (
   <SheetPrimitive.Overlay
     className={cn(
       "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
@@ -43,7 +51,7 @@ const sheetVariants = cva(
   }
 )
 
-const SheetContent = React.forwardRef(({ side = "right", className, children, ...props }, ref) => (
+const SheetContent = React.forwardRef<HTMLDivElement, SheetContentProps>(({ side = "right", className, children, ...props }, ref) => (
   <SheetPortal>
     <SheetOverlay />
     <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
@@ -78,7 +86,7 @@ const SheetFooter = ({
 )
 SheetFooter.displayName = "SheetFooter"
 
-const SheetTitle = React.forwardRef(({ className, ...props }, ref) => (
+const SheetTitle = React.forwardRef<HTMLDivElement, SheetContentProps>(({ className, ...props }, ref) => (
   <SheetPrimitive.Title
     ref={ref}
     className={cn("text-lg font-semibold text-foreground", className)}
@@ -86,7 +94,7 @@ const SheetTitle = React.forwardRef(({ className, ...props }, ref) => (
 ))
 SheetTitle.displayName = SheetPrimitive.Title.displayName
 
-const SheetDescription = React.forwardRef(({ className, ...props }, ref) => (
+const SheetDescription = React.forwardRef<HTMLDivElement, SheetContentProps>(({ className, ...props }, ref) => (
   <SheetPrimitive.Description
     ref={ref}
     className={cn("text-sm text-muted-foreground", className)}
