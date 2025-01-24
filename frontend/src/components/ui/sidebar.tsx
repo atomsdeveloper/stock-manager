@@ -5,8 +5,9 @@ import { Slot } from "@radix-ui/react-slot"
 import { VariantProps, cva } from "class-variance-authority"
 import { PanelLeft } from "lucide-react"
 
-import { useIsMobile } from "../../components/hooks/use-mobile"
 import { cn } from "../../lib/utils"
+
+import { useIsMobile } from "../../components/hooks/use-mobile";
 import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
 import { Separator } from "../../components/ui/separator"
@@ -36,6 +37,7 @@ type SidebarContext = {
   toggleSidebar: () => void
 }
 
+// eslint-disable-next-line
 const SidebarContext = React.createContext<SidebarContext | null>(null)
 
 function useSidebar() {
@@ -259,9 +261,14 @@ const Sidebar = React.forwardRef<
 )
 Sidebar.displayName = "Sidebar"
 
+interface SidebarTriggerProps extends React.PropsWithChildren<React.ComponentProps<typeof Button>> {
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
+  className?: string;
+}
+
 const SidebarTrigger = React.forwardRef<
   React.ElementRef<typeof Button>,
-  React.ComponentProps<typeof Button>
+  SidebarTriggerProps
 >(({ className, onClick, ...props }, ref) => {
   const { toggleSidebar } = useSidebar()
 
@@ -332,9 +339,14 @@ const SidebarInset = React.forwardRef<
 })
 SidebarInset.displayName = "SidebarInset"
 
+interface SidebarInputProps extends React.PropsWithChildren<React.ComponentProps<typeof Input>> {
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
+  className?: string;
+}
+
 const SidebarInput = React.forwardRef<
   React.ElementRef<typeof Input>,
-  React.ComponentProps<typeof Input>
+  SidebarInputProps
 >(({ className, ...props }, ref) => {
   return (
     <Input
@@ -380,9 +392,13 @@ const SidebarFooter = React.forwardRef<
 })
 SidebarFooter.displayName = "SidebarFooter"
 
+interface SidebarSeparatorProps extends React.PropsWithChildren<React.ComponentProps<typeof Separator>> {
+  className?: string;
+}
+
 const SidebarSeparator = React.forwardRef<
   React.ElementRef<typeof Separator>,
-  React.ComponentProps<typeof Separator>
+  SidebarSeparatorProps
 >(({ className, ...props }, ref) => {
   return (
     <Separator
@@ -533,6 +549,13 @@ const sidebarMenuButtonVariants = cva(
   }
 )
 
+interface TooltipProps {
+  side?: "top" | "right" | "bottom" | "left";
+  align?: "start" | "center" | "end";
+  hidden?: boolean;
+  children: React.ReactNode
+}
+
 const SidebarMenuButton = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<"button"> & {
@@ -571,10 +594,19 @@ const SidebarMenuButton = React.forwardRef<
       return button
     }
 
+    
+    let tooltipProps: TooltipProps = {
+      side: "right",
+      align: "center",
+      hidden: state !== "collapsed" || isMobile,
+      children: ""
+    };
+    
     if (typeof tooltip === "string") {
-      tooltip = {
+      tooltipProps = {
         children: tooltip,
       }
+      return
     }
 
     return (
@@ -584,7 +616,7 @@ const SidebarMenuButton = React.forwardRef<
           side="right"
           align="center"
           hidden={state !== "collapsed" || isMobile}
-          {...tooltip}
+          {...tooltipProps}
         />
       </Tooltip>
     )
