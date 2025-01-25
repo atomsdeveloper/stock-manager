@@ -8,7 +8,7 @@ const app = express();
 const router = require("./app/routes/router.js");
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true // need send cookies or authentications headers 
 }));
