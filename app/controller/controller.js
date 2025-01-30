@@ -12,21 +12,24 @@ const home = (req, res) => {
     return res.status(200).json({message: 'Access'})
 }
 
+const accountUser = (req, res) => {
+    const authorization = req.headers['authorization']
+    if(!authorization) {
+        return res.status(401).json({message: 'Not authorized'})
+    }
+
+    return res.status(200).json({message: 'Access'})
+}
+
 //routes
 const login = async (req, res) => {
     try {
         const {name, email, password} = req.body;
-        
         if (!name || !email || !password) {
             return res.status(400).json({ message: "Name, email, and password are required." });
         }
         
-        const hasUser = await model.hasUser(name, email, password);
-        
-        // if (!hasUser) {
-        //     return res.status(401).json({message: 'Invalid credentials. Try again later or Check your credentials.' });
-        // }
-        
+        const hasUser = await model.hasUser(name, email, password);        
         const { user } = hasUser
 
         const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET, {
@@ -34,8 +37,8 @@ const login = async (req, res) => {
         });
 
         res.setHeader('Authorization', `Bearer ${token}`)
-
         return res.status(200).json({message: "success", token: token, user: {name, email}});
+
     } catch (error) {
         if(error.message) {
             return res.status(401).json({message: 'Invalid credentials. Try again later or Check your credentials.' });
@@ -64,5 +67,6 @@ const registerUserManager = async  (req, res) => {
 module.exports = {
     home,
     login,
-    registerUserManager
+    registerUserManager,
+    accountUser
 };
