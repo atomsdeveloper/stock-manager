@@ -12,7 +12,7 @@ datasource db {
 }
 
 model UserManager {
-  id         String   @id @default(cuid())
+  id         String   @id @default(uuid())
   name       String?
   email      String?  @unique
   password   String?
@@ -20,7 +20,7 @@ model UserManager {
 }
 
 model User {
-  id          String    @id @default(cuid())
+  id          String    @id @default(uuid())
   name        String?
   email       String?   @unique
   password    String?
@@ -35,7 +35,7 @@ model User {
 }
 
 model Session {
-  id           String   @id @default(cuid())
+  id           String   @id @default(uuid())
   sessionToken String   @unique
   user_id      String
   user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
@@ -45,13 +45,14 @@ model Session {
 model Order {
   id             String         @id @default(uuid())
   user_id        String
-  user           User           @relation(fields: [user_id], references: [id])
+  user           User           @relation(fields: [user_id], references: [id], onDelete: Cascade)
   products       OrderProduct[]
   subtotalPrice  Decimal        @db.Decimal(10, 2)
   totalPrice     Decimal        @db.Decimal(10, 2)
   totalDiscounts Decimal        @db.Decimal(10, 2)
   createdAt      DateTime       @default(now())
   status         OrderStatus
+  payment        Payment[]
 }
 
 enum OrderStatus {
@@ -63,7 +64,7 @@ enum OrderStatus {
 }
 
 model OrderProduct {
-  id         String   @id @default(cuid())
+  id         String   @id @default(uuid())
   order_id   String
   order      Order    @relation(fields: [order_id], references: [id])
   product_id String
@@ -73,14 +74,16 @@ model OrderProduct {
 }
 
 model Payment {
-  id             String   @id @default(cuid())
+  id             String   @id @default(uuid())
+  order_id       String
+  order          Order    @relation(fields: [order_id], references: [id])
   payment_method String
   amount         Float
   created_at     DateTime
 }
 
 model Product {
-  id                 String         @id @default(cuid())
+  id                 String         @id @default(uuid())
   name               String
   image_url          String
   text               String
@@ -94,7 +97,7 @@ model Product {
 }
 
 model Category {
-  id         String    @id @default(cuid())
+  id         String    @id @default(uuid())
   name       String
   image_url  String
   Products   Product[]
