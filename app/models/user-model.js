@@ -14,23 +14,22 @@ const hasUser = async (_, email, pass) => {
             },
         });
 
-        if(!user) {
+        if (!user) {
             throw new Error('not is possible return a user.');
         }
 
         const match = await bcrypt.compare(pass, user.password);
-        
+
         if (!match) {
             throw new Error('Invalid credentials. Try again later or Check your credentials.');
         }
 
-        return {user};
-       
+        return { user };
+
     } catch (error) {
         return error;
     };
 };
-
 const insertUserManager = async (name, email, pass) => {
     const saltRounds = Number(process.env.SALT_ROUNDS);
     const hashPass = await bcrypt.hash(pass, saltRounds);
@@ -42,9 +41,9 @@ const insertUserManager = async (name, email, pass) => {
             }
         });
 
-        if(fetchEmail) { 
-           return null         
-        }            
+        if (fetchEmail) {
+            return null
+        }
 
         const newUser = await prisma.userManager.create({
             data: {
@@ -61,7 +60,17 @@ const insertUserManager = async (name, email, pass) => {
     };
 };
 
+const getProducts = async (req, res) => {
+    const products = await prisma.product.findMany();
+
+    if (!products) {
+        throw new Error('not exists products.');
+    }
+
+    return products;
+}
 module.exports = {
     hasUser,
-    insertUserManager
+    insertUserManager,
+    getProducts
 };
