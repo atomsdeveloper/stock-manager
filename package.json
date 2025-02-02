@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Stoke Manager System",
   "main": "index.js",
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "scripts": {
     "start": "nodemon app.js",
     "start:frontend": "cd frontend && npm start",
@@ -26,7 +29,8 @@
     "bcrypt": "^5.1.1",
     "concurrently": "^9.1.2",
     "express": "^4.21.2",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "tsx": "^4.19.2"
   },
   "dependencies": {
     "@prisma/client": "^6.2.1",
