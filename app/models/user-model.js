@@ -61,7 +61,27 @@ const insertUserManager = async (name, email, pass) => {
 };
 
 const getProducts = async (req, res) => {
-    const products = await prisma.product.findMany();
+    const { price, category } = req.query;
+
+    const filter = {};
+    if (price) filter.price = { lte: Number(price) };
+    if (category) filter.category = category;
+
+
+    if (filter.lenght < 0) {
+        return products = await prisma.product.findMany({
+            include: {
+                category: true // Inclui a categoria associada ao produto
+            }
+        });
+    }
+
+    const products = await prisma.product.findMany({
+        where: filter,
+        include: {
+            category: true, // Inclui a categoria associada ao produto
+        },
+    });
 
     if (!products) {
         throw new Error('not exists products.');
