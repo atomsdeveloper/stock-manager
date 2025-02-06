@@ -65,29 +65,40 @@ const getProducts = async (req, res) => {
 
     const filter = {};
     if (price) filter.price = { lte: Number(price) };
-    if (category) filter.category = category;
+    if (category) filter.category = String(category);
 
-
-    if (filter.lenght < 0) {
-        return products = await prisma.product.findMany({
+    // Retorna os produtos incluindo as sua categoria caso não existir filtros.
+    if (Object.keys(filter).length === 0) {
+        const products = await prisma.product.findMany({
             include: {
                 category: true // Inclui a categoria associada ao produto
             }
         });
+
+        const categories = await prisma.category.findMany();
+        return { products, categories };
     }
 
+    // Retorna os produtos com a filtragem recebida.
     const products = await prisma.product.findMany({
-        where: filter,
+        where: {
+            ...filter,
+            category: {
+                id: String(category), // Filtra produtos pela categoria específica
+            },
+        },
         include: {
             category: true, // Inclui a categoria associada ao produto
         },
     });
+    const categories = await prisma.category.findMany();
 
-    if (!products) {
-        throw new Error('not exists products.');
+
+    if (!products || !categories) {
+        throw new Error('not exists products or categories.');
     }
 
-    return products;
+    return { products, categories };
 }
 module.exports = {
     hasUser,
