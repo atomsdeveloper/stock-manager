@@ -74,14 +74,13 @@ const getProducts = async (req, res) => {
         return res.status(401).json({ message: 'Not authorized' })
     }
 
-    const products = await model.getProducts();
-    console.log(products)
+    const { products, categories } = await model.getProducts(req);
 
-    if (!products) {
+    if (!products || !categories) {
         return res.status(201).json({ message: 'Not data to proccess' })
     }
 
-    return res.status(200).json({ message: 'data to proccess seccessful', products: products })
+    return res.status(200).json({ message: 'data to proccess seccessful', response: { products, categories } })
 }
 
 module.exports = {
