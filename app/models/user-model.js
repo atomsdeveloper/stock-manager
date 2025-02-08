@@ -61,44 +61,58 @@ const insertUserManager = async (name, email, pass) => {
 };
 
 const getProducts = async (req, res) => {
-    const { price, category } = req.query;
+    const { price, category, discount, stock } = req.query;
 
     const filter = {};
-    if (price) filter.price = { lte: Number(price) };
-    if (category) filter.category = String(category);
+    if (price && !isNaN(Number(price))) {
+        filter.price = { lte: parseFloat(price) };
+    }
 
-    // Retorna os produtos incluindo as sua categoria caso não existir filtros.
-    if (Object.keys(filter).length === 0) {
+    if (discount && !isNaN(Number(discount))) {
+        filter.discountPercentage = { lte: Number(discount) };
+    }
+
+
+    if (stock && !isNaN(Number(stock))) {
+        filter.stock_quantity = { lte: Number(stock) };
+    }
+    console.log(stock)
+
+    if (category) {
+        filter.category = { id: String(category) };
+    }
+
+    try {
+        // Se não houver filtros retorna todos os produtos
+        if (Object.keys(filter).length === 0) {
+            const products = await prisma.product.findMany({
+                include: { category: true },
+            });
+            const categories = await prisma.category.findMany()
+
+            return { products, categories };
+        }
+
+        // Se houver filtros armazena na váriavel `products` todos os produtos com os filtros aplicados.
         const products = await prisma.product.findMany({
+            where: filter,
             include: {
-                category: true // Inclui a categoria associada ao produto
+                category: true
             }
         });
 
         const categories = await prisma.category.findMany();
-        return { products, categories };
+
+        if (products.length <= 0) {
+            return { products, categories }
+        } else {
+            return { products, categories };
+        }
+
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        return { message: 'Internal server error.' };
     }
-
-    // Retorna os produtos com a filtragem recebida.
-    const products = await prisma.product.findMany({
-        where: {
-            ...filter,
-            category: {
-                id: String(category), // Filtra produtos pela categoria específica
-            },
-        },
-        include: {
-            category: true, // Inclui a categoria associada ao produto
-        },
-    });
-    const categories = await prisma.category.findMany();
-
-
-    if (!products || !categories) {
-        throw new Error('not exists products or categories.');
-    }
-
-    return { products, categories };
 }
 module.exports = {
     hasUser,
